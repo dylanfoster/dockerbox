@@ -1,4 +1,6 @@
-# ![](/assets/vagrant.png) + ![](/assets/docker.png)
+# Vagrant + Docker
+
+dockerbox uses sshfs to share the guest's `code` directory on the host. Any work you plan on doing should be done in this directory
 
 ## Installation
 
@@ -6,28 +8,73 @@
 
  - [ansible](http://docs.ansible.com/ansible/index.html)
  - [ansible-galaxy](https://galaxy.ansible.com/)
+ - [vagrant](https://www.vagrantup.com/)
 
-clone the repo:
+### install vagrant and virtualbox
 
-`git clone https://github.com/dylanfoster/dockerbox.git`
+**Linux**
 
-get the requirements:
+```shell
+$ sudo apt-get install vagrant
+$ sudo apt-get install virtualbox
+$ sudo apt-get install virtualbox-dkms
+```
 
-`ansible-galaxy install -r galaxy.yml`
+**OS X**
 
-install SSHFS:
+```shell
+$ brew cask install vagrant
+$ brew cask install virtualbox
+```
 
-**linux**
-  - `sudo apt-get install sshfs`
+### install ansible
 
-**osx**
+**Linux**
 
-  - `brew install Caskroom/cask/osxfuse`
-  - `brew install sshfs`
+```shell
+$ sudo apt-get install software-properties-common
+$ sudo apt-add-repository ppa:ansible/ansible
+$ sudo apt-get update
+$ sudo apt-get install ansible
+```
 
-start the vm:
+**OS X**
 
-`vagrant up`
+```shell
+$ brew install ansible
+```
+### install SSHFS:
+
+**Linux**
+
+```shell
+$ sudo apt-get install sshfs
+```
+
+**OS X**
+
+```shell
+$ brew install Caskroom/cask/osxfuse
+$ brew install sshfs
+```
+
+### clone the repo:
+
+```shell
+$ git clone https://github.com/dylanfoster/dockerbox.git && cd dockerbox
+```
+
+### get the requirements:
+
+```shell
+$ ansible-galaxy install -r galaxy.yml
+```
+
+### start the vm:
+
+```shell
+$ vagrant up
+```
 
 ## License
 
