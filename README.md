@@ -1,4 +1,4 @@
-# ![](/assets/vagrant.png)Vagrant + ![](/assets/docker.png)Docker
+# ![](/assets/vagrant.png) + ![](/assets/docker.png)
 
 ## Installation
 
