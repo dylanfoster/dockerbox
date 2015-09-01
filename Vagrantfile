@@ -15,9 +15,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = host_name
 
   config.vm.network "forwarded_port", guest: 2375, host: 2375  # docker
-  config.vm.network "forwarded_port", guest: 3800, host: 3800  # sup api
-  config.vm.network "forwarded_port", guest: 4300, host: 4300  # sup front end
-  config.vm.network "forwarded_port", guest: 36000, host: 36000 # sup livereload
 
   config.vm.provider "virtualbox" do |v|
     v.name = "superbox"
@@ -47,4 +44,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       sshfs -F "$VAGRANT_SSH_CONFIG" -p 2222 $SSHFS_OPTS vagrant:/home/vagrant/code code
     EOF
   end
+end
+
+# load extra Vagrantfile which can be used to specify user specific configurations
+begin
+  load 'VagrantFile.user'
+rescue LoadError
+  # ignore
 end
