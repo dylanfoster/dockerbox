@@ -1,0 +1,29 @@
+---
+
+- name: Find Gitlab repo SSH host key
+  sudo: no
+  shell: ssh-keyscan gitlab.com
+  register: gitlab_ssh_host_key
+
+- name: Find Github repo ssh host key
+  sudo: no
+  shell: ssh-keyscan github.com
+  register: github_ssh_host_key
+
+- name: Add Gitlab repo host key to known_hosts file
+  sudo: no
+  lineinfile: create=yes dest=/home/vagrant/.ssh/known_hosts line='{{ gitlab_ssh_host_key.stdout }}' state=present
+
+- name: Add github repo host key to known_hosts file
+  sudo: no
+  lineinfile: create=yes dest=/home/vagrant/.ssh/known_hosts line='{{ github_ssh_host_key.stdout }}' state=present
+
+- name: Download web app source for {{ item }}
+  sudo: no
+  git:
+    repo: git@gitlab.com:ooo/{{ item }}.git
+    dest: /home/vagrant/code/{{ item }}
+    update: no
+  with_items:
+      - sup-back
+      - sup-front

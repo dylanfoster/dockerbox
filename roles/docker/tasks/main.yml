@@ -1,0 +1,38 @@
+---
+
+- name: Get operating system release
+  command: uname -r
+  register: os_release
+  changed_when: no
+
+- name: Install linux kernel extras
+  apt:
+    pkg: "{{ item }}"
+    cache_valid_time: 600
+    update_cache: yes
+  with_items:
+    - linux-image-extra-{{ os_release.stdout }}
+    - linux-image-extra-virtual
+
+- name: Install pip
+  apt: pkg=python-pip
+
+- name: Add docker apt key
+  apt_key:
+    keyserver: "hkp://p80.pool.sks-keyservers.net:80"
+    id: 36A1D7869245C8950F966E92D8576A8BA88D21E9
+
+- name: Add docker apt repository
+  apt_repository: repo="deb https://get.docker.com/ubuntu docker main"
+
+- name: Install docker
+  apt: pkg=lxc-docker-{{ docker_version }}
+
+- name: Install docker-py
+  pip: name=docker-py version={{ docker_py_version }}
+
+- name: Install docker-compose
+  pip: name=docker-compose version={{ docker_compose_version }}
+
+- name: Add 'vagrant' user to 'docker' group
+  user: name=vagrant group=docker

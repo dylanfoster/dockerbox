@@ -1,0 +1,9 @@
+---
+
+- name: Copy host machine's private ssh key
+  sudo: no
+  copy: src=~/.ssh/id_rsa dest=/home/vagrant/.ssh/id_rsa mode=0600
+
+- name: Copy host machine's public ssh key
+  sudo: no
+  copy: src=~/.ssh/id_rsa.pub dest=/home/vagrant/.ssh/id_rsa.pub

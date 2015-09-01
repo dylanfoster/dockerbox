@@ -1,0 +1,24 @@
+---
+
+- name: Install system dependencies from default repository
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    state: present
+  with_items:
+    - build-essential
+    - git-core
+    - git-extras
+    - python-pip
+    - python-software-properties
+    - software-properties-common
+    - tmux
+    - vim-common
+    - vim-nox
+    - vim-runtime
+
+- name: Uninstall apt pip
+  apt: pkg=python-pip state=absent
+
+- name: Install pip with easy_install
+  easy_install: name=pip

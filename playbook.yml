@@ -1,0 +1,9 @@
+---
+
+- hosts: all
+  roles:
+    - common
+    - ssh
+    - git
+    - docker
+    - shell

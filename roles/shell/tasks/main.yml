@@ -1,0 +1,15 @@
+---
+
+- name: Clone fzf
+  sudo: no
+  git:
+    repo: "https://github.com/junegunn/fzf"
+    dest: /home/vagrant/.fzf
+  register: fzf
+
+- name: Install fzf
+  sudo: no
+  shell: "echo 'y\ny\n' | ./install"
+  args:
+    chdir: ~/.fzf
+  when: "fzf|changed"
