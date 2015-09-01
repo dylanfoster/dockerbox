@@ -1,4 +1,4 @@
-# ![](/assets/vagrant.png) + ![](/assets/docker)
+# ![](/assets/vagrant.png) + ![](/assets/docker.png)
 
 dockerbox uses sshfs to share the guest's `code` directory on the host. Any work you plan on doing should be done in this directory
 
