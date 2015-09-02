@@ -8,9 +8,7 @@ vm_ip                   = "172.84.98.33"
 host_name               = "dockerbox.sup"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "phusion/ubuntu-14.04-amd64"
-  config.vm.box_url = "https://oss-binaries.phusionpassenger.com/vagrant/boxes/latest/ubuntu-14.04-amd64-vbox.box"
-
+  config.vm.box = "ubuntu/trusty64"
   config.vm.network "private_network", ip: vm_ip
   config.vm.hostname = host_name
 
@@ -32,6 +30,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     mkdir -p /home/vagrant/code
   EOF
 
+
   config.vm.provision :host_shell, run: 'always' do |hs|
     hs.inline = <<-EOF
       VAGRANT_SSH_CONFIG=~/.ssh/vagrant-config
@@ -44,6 +43,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       sshfs -F "$VAGRANT_SSH_CONFIG" -p 2222 $SSHFS_OPTS vagrant:/home/vagrant/code code
     EOF
   end
+  config.vm.provision :shell, inline: <<-EOF
+    sudo chown -R vagrant /home/vagrant/code
+    sudo chown -R vagrant /usr/local
+  EOF
 end
 
 # load extra Vagrantfile which can be used to specify user specific configurations
