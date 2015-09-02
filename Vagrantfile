@@ -21,6 +21,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
+  config.vm.provision :shell, inline: <<-EOF
+    sudo chown -R vagrant /usr/local
+  EOF
+
   config.vm.provision "ansible" do |ansible|
     ansible.sudo = true
     ansible.playbook = "playbook.yml"
@@ -29,7 +33,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, run: 'always', inline: <<-EOF
     mkdir -p /home/vagrant/code
   EOF
-
 
   config.vm.provision :host_shell, run: 'always' do |hs|
     hs.inline = <<-EOF
@@ -43,9 +46,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       sshfs -F "$VAGRANT_SSH_CONFIG" -p 2222 $SSHFS_OPTS vagrant:/home/vagrant/code code
     EOF
   end
+
   config.vm.provision :shell, inline: <<-EOF
     sudo chown -R vagrant /home/vagrant/code
-    sudo chown -R vagrant /usr/local
   EOF
 end
 
