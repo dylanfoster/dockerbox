@@ -4,13 +4,11 @@
 VAGRANTFILE_API_VERSION = "2"
 
 # the ip address where the vm can be accessed from the host
-vm_ip                   = "172.84.98.33"
-host_name               = "dockerbox.sup"
+vm_ip                   = "192.168.99.10"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.network "private_network", ip: vm_ip
-  config.vm.hostname = host_name
 
   config.vm.network "forwarded_port", guest: 2375, host: 2375  # docker
 
