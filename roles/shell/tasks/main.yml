@@ -7,27 +7,3 @@
     dest: /home/vagrant/.dotfiles
     recursive: yes
   register: dotfiles
-
-- name: Run dotfiles bootstrapping script
-  sudo: no
-  shell: ./bin/dotfiles
-  args:
-    chdir: ~/.dotfiles
-  when: "dotfiles|changed"
-
-- name: Set fish as vagrant shell
-  user: name=vagrant shell=/usr/bin/fish
-
-- name: Clone fzf
-  sudo: no
-  git:
-    repo: "https://github.com/junegunn/fzf"
-    dest: /home/vagrant/.fzf
-  register: fzf
-
-- name: Install fzf
-  sudo: no
-  shell: "echo 'y\ny\n' | ./install"
-  args:
-    chdir: ~/.fzf
-  when: "fzf|changed"
