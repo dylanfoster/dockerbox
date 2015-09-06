@@ -1,9 +1,19 @@
 ---
 
+- name: Install zsh
+  apt: name=zsh state=latest
+
 - name: Install dotfiles
   sudo: no
   git:
     repo: "https://github.com/dylanfoster/dotfiles.git"
-    dest: /home/vagrant/.dotfiles
+    dest: /home/vagrant/dotfiles
     recursive: yes
   register: dotfiles
+
+- name: Run dotfiles bootstrap
+  shell: "./install.sh"
+  sudo: no
+  args:
+    chdir: ~/dotfiles
+  when: "dotfiles|changed"
